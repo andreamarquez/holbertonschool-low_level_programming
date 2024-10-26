@@ -44,8 +44,6 @@ void times_table(void)
 			/* Print the units digit of the product */
 			_putchar((product % 10) + '0');
 		}
-		/* Print a dollar sign at the end of each row */
-		_putchar('$');
 		/* Print an enter to move to the next row */
 		_putchar('\n');
 	}
