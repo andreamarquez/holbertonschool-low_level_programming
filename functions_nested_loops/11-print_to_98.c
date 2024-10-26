@@ -6,44 +6,61 @@
  */
 void print_to_98(int startingNumber)
 {
-	int num;
+    int currentNumber;
 
-	if (startingNumber <= 98)
-	{
-		for (num = startingNumber; num <= 98; num++)
-		{
-			if (num >= 10)
-			{
-				_putchar((num / 10) + '0');
-			}
-			_putchar((num % 10) + '0');
-			if (num != 98)
-			{
-				_putchar(',');
-				_putchar(' ');
-			}
-		}
-	}
-	else
-	{
-		for (num = startingNumber; num >= 98; num--)
-		{
-			if (num >= 100)
-			{
-				_putchar((num / 100) + '0');
-				_putchar(((num / 10) % 10) + '0');
-			}
-			else if (num >= 10)
-			{
-				_putchar((num / 10) + '0');
-			}
-			_putchar((num % 10) + '0');
-			if (num != 98)
-			{
-				_putchar(',');
-				_putchar(' ');
-			}
-		}
-	}
-	_putchar('\n');
+    if (startingNumber <= 98)
+    {
+        for (currentNumber = startingNumber; currentNumber <= 98; currentNumber++)
+        {
+            if (currentNumber < 0)
+            {
+                _putchar('-');
+                _putchar(-currentNumber + '0');
+            }
+            else if (currentNumber >= 10)
+            {
+                if (currentNumber >= 100)
+                {
+                    _putchar((currentNumber / 100) + '0');
+                    _putchar(((currentNumber / 10) % 10) + '0');
+                }
+                else
+                {
+                    _putchar((currentNumber / 10) + '0');
+                }
+                _putchar((currentNumber % 10) + '0');
+            }
+            else
+            {
+                _putchar(currentNumber + '0');
+            }
+            if (currentNumber != 98)
+            {
+                _putchar(',');
+                _putchar(' ');
+            }
+        }
+    }
+    else
+    {
+        for (currentNumber = startingNumber; currentNumber >= 98; currentNumber--)
+        {
+            if (currentNumber >= 100)
+            {
+                _putchar((currentNumber / 100) + '0');
+                _putchar(((currentNumber / 10) % 10) + '0');
+            }
+            else if (currentNumber >= 10)
+            {
+                _putchar((currentNumber / 10) + '0');
+            }
+            _putchar((currentNumber % 10) + '0');
+            if (currentNumber != 98)
+            {
+                _putchar(',');
+                _putchar(' ');
+            }
+        }
+    }
+    _putchar('\n');
 }
