@@ -18,16 +18,22 @@ void print_to_98(int startingNumber)
 	{
 		_putchar('-');
 		if (currentNumber <= -100)
+		{
 			_putchar((-currentNumber / 100) + '0');
-		if (currentNumber <= -10)
+			_putchar(((-currentNumber / 10) % 10) + '0');
+		}
+		else if (currentNumber <= -10)
 			_putchar((-currentNumber / 10) + '0');
 		_putchar((-currentNumber % 10) + '0');
 	}
 	else
 	{
 		if (currentNumber >= 100)
+		{
 			_putchar((currentNumber / 100) + '0');
-		if (currentNumber >= 10)
+			_putchar(((currentNumber / 10) % 10) + '0');
+		}
+		else if (currentNumber >= 10)
 			_putchar((currentNumber / 10) + '0');
 		_putchar((currentNumber % 10) + '0');
 	}
