@@ -47,4 +47,4 @@ void times_table(void)
 		/* Print an enter to move to the next row */
 		_putchar('\n');
 	}
-	}
+}
