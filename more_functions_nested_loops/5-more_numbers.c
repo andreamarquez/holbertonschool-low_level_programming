@@ -10,20 +10,20 @@ void more_numbers(void)
 	int printer;
 	int number;
 
-	for (printer = 0; printer < 10; printer ++) /* loop for 10 lines */
+	for (printer = 0; printer < 10; printer++) /* loop for 10 lines */
 	{
 		for (number = 0; number <= 14; number++) /* loop for numbers 0 to 14 */
 		{
-			int units= number % 10;
-			int tens= (number/10) % 10;
-			if (tens > 0) 
-			{	 
+			int units = number % 10;
+			int tens = (number / 10) % 10;
+
+			if (tens > 0)
+			{
 				_putchar('0' + tens);
 			}
 			_putchar('0' + units);
 		}
 		/** Prints new line after the inner loops finishes */
 		_putchar('\n');
-	}		
-
-}	
+	}
+}
