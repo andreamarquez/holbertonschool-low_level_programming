@@ -11,16 +11,26 @@ void print_diagonal(int n)
 {
 	if (n <= 0)
 	{
-		_putchar ('\n');
-	}
-	else
-	{
-		int diagonalCounter;
-
-		for (diagonalCounter = 0; diagonalCounter < n; diagonalCounter++)
-		{
-			_putchar('\\');
-		}
 		_putchar('\n');
-	}
+    }
+    else
+    {
+		int diagonalCounter;
+ 
+    	for (diagonalCounter = 0; diagonalCounter < n; diagonalCounter++)
+		{
+			/* -> starts printing spaces */
+			int spacesCounter;
+
+			for (spacesCounter = 0; spacesCounter < diagonalCounter; spacesCounter++)
+			{
+				_putchar(' ');
+			}
+
+			/* -> ends printing spaces*/
+
+			_putchar('\\');
+			_putchar('\n');
+		}
+     }
 }
