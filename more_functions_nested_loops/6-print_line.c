@@ -11,17 +11,17 @@ void print_line(int n)
 {
 	if (n <= 0)
 	{
-		_putchar ('\n'); 
+		_putchar ('\n');
 	}
 	else
 	{
 		int underscoreCounter;
-		
-		for(underscoreCounter = 0; underscoreCounter < n; underscoreCounter++)
+
+		for (underscoreCounter = 0; underscoreCounter < n; underscoreCounter++)
 		{
 			_putchar('_');
 		}
-		_putchar('\n');		
+		_putchar('\n');
 	}
 
 }
