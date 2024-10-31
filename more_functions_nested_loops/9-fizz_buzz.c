@@ -33,6 +33,6 @@ int main(void)
 		printf("%d ", numberToPrint);
 		}
 		numberToPrint++;
-
 	}
+	return (0);
 }
