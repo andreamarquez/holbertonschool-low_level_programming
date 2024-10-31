@@ -18,19 +18,23 @@ int main(void)
 	{
 		if ((numberToPrint % 3 == 0) && (numberToPrint % 5 == 0))
 		{
-			printf("FizzBuzz ");
+			printf("FizzBuzz");
 		}
 		else if (numberToPrint % 3 == 0)
 		{
-			printf("Fizz ");
+			printf("Fizz");
 		}
 		else if (numberToPrint % 5 == 0)
 		{
-			printf("Buzz ");
+			printf("Buzz");
 		}
 		else
 		{
-		printf("%d ", numberToPrint);
+			printf("%d", numberToPrint);
+		}
+		if (numberToPrint < lastNumber)
+		{
+			printf(" ");
 		}
 		numberToPrint++;
 	}
