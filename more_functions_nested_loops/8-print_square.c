@@ -20,7 +20,7 @@ void print_square(int size)
 
 		for (poundCounter = 0; poundCounter < size; poundCounter++)
 		{
-			for(lineCounter = 0; lineCounter < size; lineCounter++)
+			for (lineCounter = 0; lineCounter < size; lineCounter++)
 			_putchar('#');
 			_putchar('\n');
 		}
