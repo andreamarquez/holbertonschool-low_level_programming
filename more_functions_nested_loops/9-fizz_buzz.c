@@ -38,5 +38,6 @@ int main(void)
 		}
 		numberToPrint++;
 	}
+	printf("\n");
 	return (0);
 }
