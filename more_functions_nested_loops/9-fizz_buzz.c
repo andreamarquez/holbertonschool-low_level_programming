@@ -16,17 +16,17 @@ int main(void)
 
 	while ((firstNumber <= numberToPrint) && (numberToPrint <= lastNumber))
 	{
-		if (numberToPrint % 3 == 0)
+		if ((numberToPrint % 3 == 0) && (numberToPrint % 5 == 0))
+		{
+			printf("FizzBuzz ");
+		}
+		else if (numberToPrint % 3 == 0)
 		{
 			printf("Fizz ");
 		}
 		else if (numberToPrint % 5 == 0)
 		{
 			printf("Buzz ");
-		}
-		else if ((numberToPrint % 3 == 0) && (numberToPrint % 5 == 0))
-		{
-			printf("FizzBuzz ");
 		}
 		else
 		{
