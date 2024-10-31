@@ -32,6 +32,7 @@ int main(void)
 		{
 			printf("%d", numberToPrint);
 		}
+
 		if (numberToPrint < lastNumber)
 		{
 			printf(" ");
