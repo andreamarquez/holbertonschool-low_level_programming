@@ -20,6 +20,6 @@ int _strlen(char *ps)
 		currentChar = *nextPointer;
 
 	}
-return (charCounter);
+	return (charCounter);
 }
 
