@@ -10,11 +10,12 @@ int _strlen(char *ps)
 {
 	int charCounter = 0;
 	char currentChar = *ps;
+	char *nextPointer;
 
 	while (currentChar != '\0')
 	{
 		charCounter++;
-		char *nextPointer = (ps + charCounter);
+		nextPointer = (ps + charCounter);
 
 		currentChar = *nextPointer;
 
