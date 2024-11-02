@@ -26,7 +26,15 @@ void print_array(int *arr, int numberOfElementsToPrint)
 		currentIndex++
 		)
 	{
-		printf("%d ,", arr[currentIndex]);
+		/*
+		* Only prints the 1st index without the preceding comma
+		* as the expected format is: number1, number2, finalNumber
+		*
+		*/
+		if (currentIndex == 0)
+			printf("%d", arr[currentIndex]);
+		else
+			printf(", %d", arr[currentIndex]);
 	}
 
 	printf("\n");
