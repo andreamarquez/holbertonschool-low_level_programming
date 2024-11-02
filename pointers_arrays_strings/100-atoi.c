@@ -7,8 +7,10 @@ int _isdigit(int charToCheck);
  * The number in the string can be preceded
  * by an infinite number of characters, so we need to ignore
  * any non int, ex:
- * "+bla?la+ded98" -> 98
- * "-bla?la+ded98" -> -98
+ * "- +bla? - la+ded98 -  76" -> 98 (only 2 -,
+ * the one after the numbers is ignored)
+ * "- -bla? - la+ded98 -  76" -> -98 (only 3 -)
+ * anything after the first string of numbers is ignored
  * we need to take into account all the
  * - and + signs before the number, for example
  * "-++--98" -> we can ignore the "+", but we have to count the
@@ -47,16 +49,21 @@ int _atoi(char *s)
 	int result = 0;
 	int currentCharToInt;
 
-	while (currentChar != '\0')
+	/* to know we started a number string, numberFound becomes 1 */
+	int numberFound = 0;
+
+	/* to know the number string got interrupted by other char or end of string */
+	int numberStringEnded = 0;
+
+	while ((currentChar != '\0') && (numberStringEnded != 1))
 	{
-		charCounter++;
 		nextPointer = (s + charCounter);
 
 		currentChar = *nextPointer;
-		if (currentChar == '-')
-			signResult = signResult * -1;
-		else if (_isdigit(currentChar))
+
+		if (_isdigit(currentChar))
 		{
+			numberFound = 1;
 			/*
 			* as here we know it is a numeric ASCII (a digit)
 			* we take the ASCII code and remove 48 from it (the ASCII for 0)
@@ -71,6 +78,15 @@ int _atoi(char *s)
 
 			result = result + currentCharToInt;
 		}
+		else
+		{
+			if (currentChar == '-')
+				signResult = signResult * -1;
+			/* in case the next digit is not an int */
+			if (numberFound == 1)
+				numberStringEnded = 1;
+		}
+		charCounter++;
 	}
 	/* give the result a sign */
 	result = result * signResult;
@@ -90,7 +106,7 @@ int _isdigit(int charToCheck)
 	* 48 is the ASCII of 0,
 	* 57 is the ASCII of 9
 	*/
-	if (charToCheck >= 48 && charToCheck <= 57)
+	if ((charToCheck >= 48) && (charToCheck <= 57))
 		return (1);
 	else
 		return (0);
