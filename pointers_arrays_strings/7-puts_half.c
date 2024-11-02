@@ -14,17 +14,39 @@ int _strlen(char *ps);
 void puts_half(char *pstr)
 {
 	int stringLength = _strlen(pstr);
-	int finalStringIndex = stringLength - 1;
-	/*
-	 * Get the final char address of the string
-	*/
-	char *currentCharAddress = (pstr + finalStringIndex);
+	char *currentCharAddress;
 	int numberOfCharactersToPrint;
+	int positionsToMoveToStartPrinting;
 
 	if (isEven(stringLength))
 		numberOfCharactersToPrint = stringLength / 2;
 	else
 		numberOfCharactersToPrint = (stringLength - 1) / 2;
+
+	/*
+	 * We need to get the number of positions to jump from
+	 * the pointer address -> to the 1st character on the second half
+	 * for "Hola" the length is 4 (even),
+	 * condition: we need to print 2 characters (length_of_the_string / 2)
+	 * so we need to jump to "l"
+	 * we need 2 jumps, that is length - characters to print
+	 *
+	 * for "Sonia" the length is 5 (even),
+	 * condition: we need to print 2 characters (length_of_the_string - 1) / 2
+	 * so we need still 2 jumps, that is length - characters to print
+	 * currentCharAddress should be the address of  "i"
+	 *
+	*/
+	positionsToMoveToStartPrinting = stringLength - numberOfCharactersToPrint;
+
+	/*
+	 * Get the first char address of the second half of
+	 * the string, ex:
+	 * "Hola"
+	 * currentCharAddress should be the address of  "l"
+	 *
+	*/
+	currentCharAddress = (pstr + positionsToMoveToStartPrinting);
 
 	/*
 	 * Print the char on the current address and keep moving
@@ -34,7 +56,7 @@ void puts_half(char *pstr)
 	while (numberOfCharactersToPrint > 0)
 	{
 		_putchar(*currentCharAddress);
-		currentCharAddress--;
+		currentCharAddress++;
 		numberOfCharactersToPrint--;
 	}
 	_putchar('\n');
@@ -57,7 +79,7 @@ int isEven(int number)
 /**
  *  _strlen - Returns the length of a string.
  * @ps: pointer that points to the string ("chain of characters").
- * Return: string lenght (int)
+ * Return: string length (int)
  *
  */
 int _strlen(char *ps)
