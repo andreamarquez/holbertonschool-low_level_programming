@@ -26,7 +26,7 @@ void print_array(int *arr, int numberOfElementsToPrint)
 		currentIndex++
 		)
 	{
-		printf("%d ", arr[currentIndex]);
+		printf("%d ,", arr[currentIndex]);
 	}
 
 	printf("\n");
