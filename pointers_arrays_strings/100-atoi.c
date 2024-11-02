@@ -77,9 +77,9 @@ int _atoi(char *s)
 			/* Check for overflow before multiplying and adding */
 			if (result > (2147483647 - currentCharToInt) / 10)
 			{
-				result = 2147483647;
-				/* on overflow end the loop */
-				numberStringEnded = 1;
+				/* Handle overflow case, return max or min int value */
+				result = (signResult == 1) ? 2147483647 : -2147483648;
+				return (result);
 			}
 
 			result = result * 10;
