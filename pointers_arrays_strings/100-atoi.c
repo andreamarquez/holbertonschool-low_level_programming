@@ -74,6 +74,14 @@ int _atoi(char *s)
 			*/
 			currentCharToInt = currentChar - 48;
 
+			/* Check for overflow before multiplying and adding */
+			if (result > (2147483647 - currentCharToInt) / 10)
+			{
+				result = 2147483647;
+				/* on overflow end the loop */
+				numberStringEnded = 1;
+			}
+
 			result = result * 10;
 
 			result = result + currentCharToInt;
