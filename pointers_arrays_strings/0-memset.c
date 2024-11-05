@@ -2,7 +2,7 @@
 #include "main.h"
 
 /**
- * _memset - fills memory with a constant byte
+ * _memset - fills memory with a constant byte.
  * @memory_area: A pointer to start on the memory area.
  * @value: The value to fill the memory with.
  * @number_of_bytes_to_replace: The number of bytes(slots),
