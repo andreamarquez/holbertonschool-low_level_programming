@@ -20,7 +20,7 @@ char *_strstr(char *main_string, char *substring)
 {
 	int substring_counter = 0;
 	int main_string_counter;
-	int characterFound = 0;
+	int substringFound = 0;
 
 	if (*substring == '\0')
 		return (main_string);
@@ -33,7 +33,7 @@ char *_strstr(char *main_string, char *substring)
 	{
 		if (*(main_string + main_string_counter) == *(substring))
 		{
-			characterFound = 1;
+			substringFound = 1;
 			for (
 				substring_counter = 0;
 				*(substring + substring_counter) != '\0';
@@ -45,11 +45,11 @@ char *_strstr(char *main_string, char *substring)
 					!= *(substring + substring_counter)
 					)
 				{
-					characterFound = 0;
+					substringFound = 0;
 					break;
 				}
 			}
-			if (characterFound == 1)
+			if (substringFound == 1)
 				return (main_string + main_string_counter);
 		}
 	}
