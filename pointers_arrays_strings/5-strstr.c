@@ -11,38 +11,49 @@
  * Return: NULL if any character of the main_string matches
  * with the substring OR returns a pointer of the character
  * in the substring that matches with the main_string.
+ * If the substring is empty, the function should return
+ * the main_string itself. This is because an empty substring
+ * is considered to be found at the beginning of any string,
+ * including an empty main_string.
  */
 char *_strstr(char *main_string, char *substring)
 {
-	int counter;
-	int second_counter;
+	int substring_counter = 0;
+	int main_string_counter;
 	int characterFound = 0;
 	int mainStringPosition = 0;
 
-	for (counter = 0; (*(substring + counter) != '\0'); counter++)
+	if (*substring == '\0')
+		return (main_string);
+
+	for (
+		main_string_counter = 0;
+		(*(main_string + main_string_counter)) != '\0';
+		main_string_counter++
+		)
 	{
-		for (
-			second_counter = (mainStringPosition + counter);
-			((*(main_string + second_counter) != '\0'));
-			second_counter++
-			)
+		if (*(main_string + main_string_counter) == *(substring))
 		{
-			if (((*(substring + counter)) != (*(main_string + second_counter))) && characterFound == 1)
+			mainStringPosition = main_string_counter;
+			characterFound = 1;
+			for (
+				substring_counter = 0;
+				*(substring + substring_counter) != '\0';
+				substring_counter++
+				)
 			{
-				return (NULL);
+				if (
+					*(main_string + main_string_counter + substring_counter)
+					!= *(substring + substring_counter)
+					)
+				{
+					characterFound = 0;
+					break;
+				}
 			}
-			else if ((*(substring + counter)) == (*(main_string + second_counter)))
-			{
-				if (characterFound == 0)
-					mainStringPosition = second_counter;
-				characterFound = 1;
-				break;
-			}
+			if (characterFound == 1)
+				return (main_string + mainStringPosition);
 		}
-		if (characterFound == 0)
-			return (NULL);
 	}
-	if (characterFound == 1)
-		return (main_string + mainStringPosition);
 	return (NULL);
 }
