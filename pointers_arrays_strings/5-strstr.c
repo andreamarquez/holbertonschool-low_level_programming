@@ -1,4 +1,3 @@
-#include <stdio.h>
 #include "main.h"
 
 /**
@@ -28,5 +27,5 @@ char *_strstr(char *main_string, char *substring)
 			}
 		}
 	}
-	return (NULL);
+	return (0);
 }
