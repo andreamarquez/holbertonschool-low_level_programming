@@ -21,7 +21,6 @@ char *_strstr(char *main_string, char *substring)
 	int substring_counter = 0;
 	int main_string_counter;
 	int characterFound = 0;
-	int mainStringPosition = 0;
 
 	if (*substring == '\0')
 		return (main_string);
@@ -34,7 +33,6 @@ char *_strstr(char *main_string, char *substring)
 	{
 		if (*(main_string + main_string_counter) == *(substring))
 		{
-			mainStringPosition = main_string_counter;
 			characterFound = 1;
 			for (
 				substring_counter = 0;
@@ -52,7 +50,7 @@ char *_strstr(char *main_string, char *substring)
 				}
 			}
 			if (characterFound == 1)
-				return (main_string + mainStringPosition);
+				return (main_string + main_string_counter);
 		}
 	}
 	return (NULL);
