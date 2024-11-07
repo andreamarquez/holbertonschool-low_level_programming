@@ -17,9 +17,9 @@ char *_strstr(char *main_string, char *substring)
 	int counter;
 	int second_counter;
 
-	for (counter = 0; (*(substring + counter) != '\0'); counter++)
+	for (counter = 0; (*(main_string + counter) != '\0'); counter++)
 	{
-		for (second_counter = 0; (*(main_string + second_counter) != '\0');
+		for (second_counter = 0; (*(substring + second_counter) != '\0');
 		second_counter++)
 		{
 			if ((*(substring + counter)) == (*(main_string + second_counter)))
