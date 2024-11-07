@@ -16,17 +16,33 @@ char *_strstr(char *main_string, char *substring)
 {
 	int counter;
 	int second_counter;
+	int characterFound = 0;
+	int mainStringPosition = 0;
 
-	for (counter = 0; (*(main_string + counter) != '\0'); counter++)
+	for (counter = 0; (*(substring + counter) != '\0'); counter++)
 	{
-		for (second_counter = 0; (*(substring + second_counter) != '\0');
-		second_counter++)
+		for (
+			second_counter = (mainStringPosition + counter);
+			((*(main_string + second_counter) != '\0'));
+			second_counter++
+			)
 		{
-			if ((*(substring + counter)) == (*(main_string + second_counter)))
+			if (((*(substring + counter)) != (*(main_string + second_counter))) && characterFound == 1)
 			{
-				return ((substring + counter));
+				return (NULL);
+			}
+			else if ((*(substring + counter)) == (*(main_string + second_counter)))
+			{
+				if (characterFound == 0)
+					mainStringPosition = second_counter;
+				characterFound = 1;
+				break;
 			}
 		}
+		if (characterFound == 0)
+			return (NULL);
 	}
+	if (characterFound == 1)
+		return (main_string + mainStringPosition);
 	return (NULL);
 }
