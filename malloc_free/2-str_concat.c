@@ -17,10 +17,11 @@ int _strlen(char *ps);
 char *str_concat(char *s1, char *s2)
 {
 	char *s3;
-	int s1index = 0;
-	int s2index = 0;
-	int length1;
-	int length2;
+	size_t s1index = 0;
+	size_t s2index = 0;
+	size_t length1;
+	size_t length2;
+	size_t MAX_SIZE_T = 18446744073709551615UL;
 
 	if (s1 == NULL && s2 == NULL)
 	{
@@ -30,6 +31,9 @@ char *str_concat(char *s1, char *s2)
 
 	length1 = _strlen(s1);
 	length2 = _strlen(s2);
+
+	if (length1 > MAX_SIZE_T - length2 - 1)
+		return (NULL);
 
 	s3 = malloc(((length1 + length2) + 1) * sizeof(char));
 
