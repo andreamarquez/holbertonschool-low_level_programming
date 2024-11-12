@@ -29,6 +29,9 @@ char *str_concat(char *s1, char *s2)
 		return (s3);
 	}
 
+	if (s1 == NULL) s1 = "";
+	if (s2 == NULL) s2 = "";
+
 	length1 = _strlen(s1);
 	length2 = _strlen(s2);
 
@@ -42,20 +45,14 @@ char *str_concat(char *s1, char *s2)
 		return (NULL);
 	}
 
-	if (s1 != NULL)
+	for (s1index = 0; s1index < length1; s1index++)
 	{
-		for (s1index = 0; s1index < length1; s1index++)
-		{
-			s3[s1index] = s1[s1index];
-		}
+		s3[s1index] = s1[s1index];
 	}
 
-	if (s2 != NULL)
+	for (s2index = 0; s2index < length2; s2index++)
 	{
-		for (s2index = 0; s2index < length2; s2index++)
-		{
-			s3[s1index + s2index] = s2[s2index];
-		}
+		s3[s1index + s2index] = s2[s2index];
 	}
 
 	s3[s1index + s2index] = '\0';
