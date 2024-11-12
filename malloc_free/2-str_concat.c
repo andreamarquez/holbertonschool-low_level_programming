@@ -20,7 +20,7 @@ char *str_concat(char *s1, char *s2)
 	size_t s2index = 0;
 	size_t length1;
 	size_t length2;
-	size_t MAX_SIZE_T = 18446744073709551615UL;
+	size_t max_size_t = (size_t)-1;
 
 	if (s1 == NULL && s2 == NULL)
 	{
@@ -31,7 +31,7 @@ char *str_concat(char *s1, char *s2)
 	length1 = _strlen(s1);
 	length2 = _strlen(s2);
 
-	if (length1 > MAX_SIZE_T - length2 - 1)
+	if (length1 > max_size_t - length2 - 1)
 		return (NULL);
 
 	s3 = malloc(((length1 + length2) + 1) * sizeof(char));
