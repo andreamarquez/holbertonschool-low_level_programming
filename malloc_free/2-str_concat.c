@@ -22,11 +22,10 @@ char *str_concat(char *s1, char *s2)
 	size_t length2;
 	size_t max_size_t = (size_t)-1;
 
-	if (s1 == NULL && s2 == NULL)
-	{
-		s3 = "";
-		return (s3);
-	}
+	if (s1 == NULL)
+		s1 = "";
+	if (s2 == NULL)
+		s2 = "";
 
 	length1 = _strlen(s1);
 	length2 = _strlen(s2);
@@ -36,7 +35,7 @@ char *str_concat(char *s1, char *s2)
 
 	s3 = malloc(((length1 + length2) + 1) * sizeof(char));
 
-	if (s3 == NULL)
+	if (s3 == NULL || s3 == 0 )
 	{
 		return (NULL);
 	}
