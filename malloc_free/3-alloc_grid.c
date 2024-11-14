@@ -14,41 +14,35 @@
 int **alloc_grid(int width, int height)
 {
 	int **array2D;
-
 	int counter;
 	int vertical_index;
 	int horizontal_index;
 	int array_to_free_counter;
 
 	if (width <= 0 || height <= 0)
-	{
 		return (NULL);
-	}
+
 	array2D = malloc(height * sizeof(int *));
 
 	if (array2D == NULL)
-	{
 		return (NULL);
-	}
 
 	for (counter = 0; counter < height; counter++)
 	{
 		array2D[counter] = malloc(width * sizeof(int));
-
 		if (array2D[counter] == NULL)
-        {
-            /* Free previously allocated memory */
-            for (
+		{
+			for (
 				array_to_free_counter = 0;
 				array_to_free_counter < counter;
 				array_to_free_counter++
 				)
-            {
-                free(array2D[array_to_free_counter]);
-            }
-            free(array2D);
-            return (NULL);
-        }
+			{
+				free(array2D[array_to_free_counter]);
+			}
+			free(array2D);
+			return (NULL);
+		}
 	}
 
 	for (vertical_index = 0; vertical_index < height; vertical_index++)
@@ -59,17 +53,4 @@ int **alloc_grid(int width, int height)
 		}
 	}
 	return (array2D);
-}
-
-/**
- * freeArray2D -  frees up memory for given array
- * array of integers.
- * Each element of the 2D array, should be initialized to 0.
- * @array2D: 2D array.
- * @height: height of the array.
- *
- */
-void freeArray2D (int **array2D)
-{
-
 }
