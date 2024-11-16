@@ -1,5 +1,7 @@
 #include <stdlib.h>
-#include <string.h>
+
+int _strlen(char *ps);
+
 /**
  * string_nconcat - concatenate two strings.
  * The returned pointer points to a newly allocated space in memory that
@@ -37,8 +39,8 @@ char *string_nconcat(char *string_1,
 		string_2 = "";
 
 	/* Checks the length of the string*/
-	length_s1 = strlen(string_1);
-	length_s2 = strlen(string_2);
+	length_s1 = _strlen(string_1);
+	length_s2 = _strlen(string_2);
 
 	/*If number_of_char is >= than length_s2, use the entire string_2*/
 
@@ -61,4 +63,26 @@ char *string_nconcat(char *string_1,
 	/* Adding the null terminator at the end*/
 	new_string[length_s1 + number_of_char] = '\0';
 	return (new_string);
+}
+
+/**
+ *  _strlen - Returns the length of a string.
+ * @ps: pointer that points to the string ("chain of characters").
+ * Return: string length (int)
+ *
+ */
+int _strlen(char *ps)
+{
+	int charCounter = 0;
+	char currentChar = *ps;
+	char *nextPointer;
+
+	while (currentChar != '\0')
+	{
+		charCounter++;
+		nextPointer = (ps + charCounter);
+
+		currentChar = *nextPointer;
+	}
+	return (charCounter);
 }
