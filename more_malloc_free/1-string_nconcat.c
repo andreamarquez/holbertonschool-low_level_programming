@@ -40,6 +40,8 @@ char *string_nconcat(char *string_1,
 	length_s1 = strlen(string_1);
 	length_s2 = strlen(string_2);
 
+	/*If number_of_char is >= than length_s2, use the entire string_2*/ 
+
 	if (number_of_char >= length_s2)
 		number_of_char = length_s2;
 
