@@ -1,5 +1,5 @@
-#ifndef DOG_H
-#define DOG_H
+#ifndef DOG_STRUCTURES
+#define DOG_STRUCTURES
 
 /**
  * struct dog - structure that contains the dog attributes
@@ -17,4 +17,11 @@ struct dog
 	char *owner;
 };
 
-#endif /* DOG_H */
+#endif /* DOG_STRUCTURES */
+
+#ifndef DOG_FUNCTIONS
+#define DOG_FUNCTIONS
+
+void init_dog(struct dog *d, char *name, float age, char *owner);
+
+#endif /* DOG_FUNCTIONS */
