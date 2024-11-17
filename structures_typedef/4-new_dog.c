@@ -64,18 +64,14 @@ dog_t *new_dog(char *name, float age, char *owner)
  */
 int _strlen(char *ps)
 {
-	int charCounter = 0;
-	char currentChar = *ps;
-	char *nextPointer;
+	int len = 0;
 
-	while (currentChar != '\0')
+	while (*ps++)
 	{
-		charCounter++;
-		nextPointer = (ps + charCounter);
-
-		currentChar = *nextPointer;
+		len++;
 	}
-	return (charCounter);
+
+	return (len);
 }
 
 
