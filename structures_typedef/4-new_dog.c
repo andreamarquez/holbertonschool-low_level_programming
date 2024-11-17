@@ -11,12 +11,12 @@ int _strlen(char *ps);
  * @name: Name of the dog.
  * @age: The age of the dog.
  * @owner: The owner of the dog.
- * Return: NULL if function fails.
+ * Return: NULL if function fails, or a pointer
+ * to the dog_t that was created.
 */
 dog_t *new_dog(char *name, float age, char *owner)
 {
-	dog_t doggy;
-	dog_t *pointer;
+	dog_t *p_doggy;
 
 	char *name_copy = "";
 	char *owner_copy = "";
@@ -24,31 +24,36 @@ dog_t *new_dog(char *name, float age, char *owner)
 	if (name == NULL || owner == NULL)
 		return (NULL);
 
-	pointer = malloc(sizeof(dog_t));
+	p_doggy = malloc(sizeof(dog_t));
 
-	if (pointer == NULL)
+	if (p_doggy == NULL)
 	{
 		return (NULL);
 	}
 
-	if (
-		(_strlen(name) > _strlen(doggy.name))
-		||
-		(_strlen(owner) > _strlen(doggy.owner)))
+	name_copy = malloc((_strlen(name) + 1) * sizeof(char));
+	if (name_copy == NULL)
 	{
+		free(pointer);
+		return (NULL);
+	}
+
+	owner_copy = malloc((_strlen(owner) + 1) * sizeof(char));
+	if (owner_copy == NULL)
+	{
+		free(name_copy);
+		free(pointer);
 		return (NULL);
 	}
 
 	_strcpy(name_copy, name);
 	_strcpy(owner_copy, owner);
 
-	doggy.name = name_copy;
-	doggy.age = age;
-	doggy.owner = owner_copy;
+	p_doggy->name = name_copy;
+	p_doggy->age = age;
+	p_doggy->owner = owner_copy;
 
-	pointer = &doggy;
-
-	return (pointer);
+	return (p_doggy);
 }
 
 /**
