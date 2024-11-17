@@ -10,12 +10,12 @@
  * Description: This structure is used to store information about a dog,
  * including its name, age, and owner.
 */
-struct dog
+typedef struct dog
 {
 	char *name;
 	float age;
 	char *owner;
-};
+} dog_t;
 
 #endif /* DOG_STRUCTURES */
 
