@@ -2,8 +2,7 @@
 #include <stdio.h>
 #include "dog.h"
 
-char *_strcpy(char *destination, char *source);
-int _strlen(char *ps);
+char *_strdup(char *str);
 
 /**
  * new_dog - creates a new dog.
@@ -18,9 +17,6 @@ dog_t *new_dog(char *name, float age, char *owner)
 {
 	dog_t *p_doggy;
 
-	char *name_copy = "";
-	char *owner_copy = "";
-
 	if (name == NULL || owner == NULL)
 		return (NULL);
 
@@ -31,94 +27,53 @@ dog_t *new_dog(char *name, float age, char *owner)
 		return (NULL);
 	}
 
-	name_copy = malloc((_strlen(name) + 1) * sizeof(char));
-	if (name_copy == NULL)
+	p_doggy->name = _strdup(name);
+	if (p_doggy->name == NULL)
 	{
 		free(p_doggy);
 		return (NULL);
 	}
 
-	owner_copy = malloc((_strlen(owner) + 1) * sizeof(char));
-	if (owner_copy == NULL)
+	p_doggy->owner = _strdup(owner);
+	if (p_doggy->owner == NULL)
 	{
-		free(name_copy);
+		free(p_doggy->name);
 		free(p_doggy);
 		return (NULL);
 	}
 
-	_strcpy(name_copy, name);
-	_strcpy(owner_copy, owner);
-
-	p_doggy->name = name_copy;
 	p_doggy->age = age;
-	p_doggy->owner = owner_copy;
 
 	return (p_doggy);
 }
 
 /**
- *  _strlen - Returns the length of a string.
- * @ps: pointer that points to the string ("chain of characters").
- * Return: string length (int)
+ * _strdup - returns a pointer to a newly allocated space in memory, which
+ * contains a copy of the string given as a parameter.
+ * @str: string to copy
  *
+ * Return: Pointer
  */
-int _strlen(char *ps)
+char *_strdup(char *str)
 {
-	int len = 0;
+	int l, i;
+	char *s;
 
-	while (*ps++)
+	if (str == NULL)
+		return (0);
+
+	l = 0;
+	while (*(str + l))
+		l++;
+
+	s = malloc(sizeof(char) * l + 1);
+
+	if (s == 0)
+		return (0);
+
+	for (i = 0; i <= l; i++)
 	{
-		len++;
+		*(s + i) = *(str + i);
 	}
-
-	return (len);
-}
-
-
-/**
- * _strcpy - copies the string pointed to by src,
- * including the terminating null byte (\0), to the
- * buffer pointed to by @destination
- *
- *
- * @destination: copy address destination (for the string to copy)
- * @source: the address of the original string to copy
- *
- * Return: the pointer to destination
- *
- */
-char *_strcpy(char *destination, char *source)
-{
-	int sourceCharCounter = 0;
-	char currentSourceChar = *source;
-	char *nextSourceCharPointer;
-
-	/*
-	* we copy until we reach the null terminator '\0'
-	* but as we need to include it, we will add it after the while
-	*/
-	while (currentSourceChar != '\0')
-	{
-		/*
-		* sourceCharCounter begins on 0 so the first address
-		* of source is used on the 1st iteration of the while,
-		* then we start jumping address positions:
-		* 78 + 0, 78 + 1
-		*
-		*/
-		nextSourceCharPointer = (source + sourceCharCounter);
-		currentSourceChar = *nextSourceCharPointer;
-		*(destination + sourceCharCounter) = currentSourceChar;
-		sourceCharCounter++;
-	}
-
-	/*
-	* sourceCharCounter now lets us jump to the very end of
-	* the string we formed, pointed by destination,
-	* to add a null Terminator
-	*
-	*/
-	*(destination + sourceCharCounter) = '\0';
-
-	return (destination);
+	return (s);
 }
