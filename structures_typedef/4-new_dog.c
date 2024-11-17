@@ -3,6 +3,7 @@
 #include "dog.h"
 
 char *_strcpy(char *destination, char *source);
+int _strlen(char *ps);
 
 /**
  * new_dog - creates a new dog.
@@ -23,23 +24,55 @@ dog_t *new_dog(char *name, float age, char *owner)
 	if (name == NULL || owner == NULL)
 		return (NULL);
 
+	pointer = malloc(sizeof(dog_t));
+
+	if (pointer == NULL)
+	{
+		return (NULL);
+	}
+
+	if (
+		(_strlen(name) > _strlen(doggy.name))
+		||
+		(_strlen(owner) > _strlen(doggy.owner)))
+	{
+		return (NULL);
+	}
+
 	_strcpy(name_copy, name);
 	_strcpy(owner_copy, owner);
 
 	doggy.name = name_copy;
 	doggy.age = age;
 	doggy.owner = owner_copy;
-	pointer = malloc(sizeof(dog_t));
-	if (pointer == NULL)
-	{
-		free(name_copy);
-		free(owner_copy);
-		return (NULL);
-	}
+
 	pointer = &doggy;
 
 	return (pointer);
 }
+
+/**
+ *  _strlen - Returns the length of a string.
+ * @ps: pointer that points to the string ("chain of characters").
+ * Return: string length (int)
+ *
+ */
+int _strlen(char *ps)
+{
+	int charCounter = 0;
+	char currentChar = *ps;
+	char *nextPointer;
+
+	while (currentChar != '\0')
+	{
+		charCounter++;
+		nextPointer = (ps + charCounter);
+
+		currentChar = *nextPointer;
+	}
+	return (charCounter);
+}
+
 
 /**
  * _strcpy - copies the string pointed to by src,

@@ -12,8 +12,8 @@
 */
 typedef struct dog
 {
-	char *name;
 	float age;
+	char *name;
 	char *owner;
 } dog_t;
 
