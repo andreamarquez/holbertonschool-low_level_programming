@@ -16,7 +16,7 @@ void print_name(char *name, void (*function)(char *))
 {
 	/* Check if name or function pointer is NULL */
 	if (name == NULL || function == NULL)
-	return;
+		return;
 
 	/* Call the function pointed to by function with name as the argument */
 	function(name);
