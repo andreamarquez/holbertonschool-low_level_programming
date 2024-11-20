@@ -47,10 +47,12 @@ int op_mul(int a, int b)
  */
 int op_div(int a, int b)
 {
+	int division_by_zero_error = 100;
+
 	if (b == 0)
 	{
 		printf("Error\n");
-		exit(100);
+		exit(division_by_zero_error);
 	}
 
 	return (a / b);
@@ -65,10 +67,12 @@ int op_div(int a, int b)
  */
 int op_mod(int a, int b)
 {
+	int module_by_zero_error = 100;
+
 	if (b == 0)
 	{
 		printf("Error\n");
-		exit(100);
+		exit(module_by_zero_error);
 	}
 
 	return (a % b);

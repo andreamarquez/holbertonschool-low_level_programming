@@ -25,9 +25,15 @@ int (*get_op_func(char *s))(int a, int b)
 
 	i = 0;
 
-	/* we only try the check if the string param has only one */
-	/* character, ex: "*+" has two chars so it */
-	/* means s[1] is "+" and not a null terminator */
+	/**
+	 * s comes from terminal argv arguments, so it is a string
+	 * s tells us which operation we need to get, but it has to have
+	 * only one char, therefore the second char has to be a null terminator
+	 * if s[1] is '\0', it means our string has only one char
+	 * which is OK as we ONLY expect one operator in the string, not
+	 * many: "+" is OK, "+*" is NOT ok as it has two operators
+	 * then s[1] won't be '\0' for the 2th example but will be "*"
+	*/
 	while ((ops[i].operator != NULL) && s[1] == '\0')
 	{
 		if (s[0] == ops[i].operator[0])

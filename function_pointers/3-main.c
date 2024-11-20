@@ -19,6 +19,7 @@ int main(int argc, char *argv[])
 	int no_valid_operator_found_error = 99;
 	int first_number;
 	int second_number;
+	char *operator_symbol;
 	int (*op_func)(int a, int b);
 	int result;
 
@@ -28,7 +29,9 @@ int main(int argc, char *argv[])
 		exit(incorrect_args_length_error);
 	}
 
-	op_func = get_op_func(argv[2]);
+	operator_symbol = argv[2];
+
+	op_func = get_op_func(operator_symbol);
 
 	if (op_func == NULL)
 	{
