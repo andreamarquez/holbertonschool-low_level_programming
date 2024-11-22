@@ -18,17 +18,20 @@ void print_numbers(const char *separator, const unsigned int number, ...)
 
 	/* Checks if the number is 0 */
 	if (number == 0)
+	{
+		printf("\n");
 		return;
+	}
 
 	last_position = number - 1;
+
+	if (separator == 0)
+		separator = "";
 
 	/*
 	* Initialize the variable arguments with va_start.
 	*/
 	va_start(arguments, number);
-
-	if (separator == 0)
-		separator = "";
 
 	/* iterate through arguments and sum them using */
 	/* the va_arg macro */
