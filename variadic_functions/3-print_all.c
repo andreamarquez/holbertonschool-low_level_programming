@@ -15,7 +15,7 @@ void _printString(va_list arguments);
  * i: integer
  * f: float
  * s: char *
- * if the string is NULL, print (nil) instead
+ * the string is NULL, print (nil) instead
  * any other char should be ignored.
  */
 void print_all(const char * const format, ...)
@@ -35,41 +35,30 @@ void print_all(const char * const format, ...)
 	/* we need an empty separator only on the 1st iteration */
 	char *separator = "";
 
-	printf("TEST -0");
-
-
 	va_start(arguments, format);
-
-	printf("TEST 0");
 
 	while (format && format[next_argument_position])
 	{
-		printf("TEST 1");
 		format_option_counter = 0;
 
 		while (print_by_type[format_option_counter].format_type != NULL)
 		{
-			printf("TEST 2");
 			/* we ignore any char on the format string that is not one of the options */
 			if (format[next_argument_position] ==
 			print_by_type[format_option_counter].format_type[0])
 			{
-				printf("TEST 3");
 				printf("%s", separator);
 				print_by_type[format_option_counter].print_function(arguments);
-				/* we end the inner loop iteration if we found something to print */
+				/* we end the inner loop iteration we found something to print */
 				/* break; */
 			}
 			format_option_counter++;
 		}
 
-		printf("TEST 4");
-
 		/* we set the comma to print before the following args */
 		separator = ", ";
 		next_argument_position++;
 	}
-	printf("TEST 5");
 	printf("\n");
 	va_end(arguments);
 }
