@@ -3,7 +3,8 @@
 #include "variadic_functions.h"
 
 /**
- * print_numbers - Prints numbers, followed by a separator.
+ * print_numbers - Prints numbers, followed by a separator and
+ * a new line.
  * @separator: The string to be printed between numbers.
  * @number: The number of integers passed to the function.
  * If the separator is NULL, it will not be printed between numbers.
@@ -25,7 +26,7 @@ void print_numbers(const char *separator, const unsigned int number, ...)
 
 	last_position = number - 1;
 
-	if (separator == 0)
+	if (separator == NULL)
 		separator = "";
 
 	/*
@@ -33,8 +34,9 @@ void print_numbers(const char *separator, const unsigned int number, ...)
 	*/
 	va_start(arguments, number);
 
-	/* iterate through arguments and sum them using */
-	/* the va_arg macro */
+	/* iThis code snippet iterates through a list of 
+	variadic arguments and prints them. */
+	
 	for (counter = 0; counter < last_position; counter++)
 	{
 		next_arg = va_arg(arguments, int);
