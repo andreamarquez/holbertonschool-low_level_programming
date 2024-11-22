@@ -10,7 +10,7 @@
 typedef struct operation
 {
 	char *operator;
-	int (*f)(int a, int b);
+	int (*corresponding_function)(int a, int b);
 } op_t;
 
 

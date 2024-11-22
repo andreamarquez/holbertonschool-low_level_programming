@@ -1,6 +1,4 @@
-#include <stdio.h>
 #include <stdarg.h>
-#include <limits.h>
 #include "variadic_functions.h"
 
 /**
@@ -14,6 +12,7 @@ int sum_them_all(const unsigned int number, ...)
 {
 	unsigned int counter;
 	int next_arg;
+	int INT_MAX = 2147483647;
 	/*
 	* sum is a variable that hold the sum and
 	* initialize it to 0
