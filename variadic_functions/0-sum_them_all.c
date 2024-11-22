@@ -20,7 +20,7 @@ int sum_them_all(const unsigned int number, ...)
 	va_list arguments;
 
 	/* Checks if the number is 0 */
-	if (number == 0)
+	if (number <= 0)
 		return (0);
 
 	/*
