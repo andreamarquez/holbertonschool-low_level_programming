@@ -2,9 +2,6 @@
 #include <stdio.h>
 #include "variadic_functions.h"
 
-void print_number(int number_to_print);
-void print_separator(const char *separator);
-
 /**
  * print_numbers - Prints numbers, followed by a separator.
  * @separator: The string to be printed between numbers.
@@ -15,13 +12,15 @@ void print_numbers(const char *separator, const unsigned int number, ...)
 {
 	unsigned int counter;
 	int next_arg;
-	unsigned int last_position = number - 1;
+	unsigned int last_position;
 
 	va_list arguments;
 
 	/* Checks if the number is 0 */
 	if (number == 0)
 		return;
+
+	last_position = number - 1;
 
 	/*
 	* Initialize the variable arguments with va_start.
@@ -34,58 +33,12 @@ void print_numbers(const char *separator, const unsigned int number, ...)
 	for (counter = 0; counter < number; counter++)
 	{
 		next_arg = va_arg(arguments, int);
-		print_number(next_arg);
+		printf("%d", next_arg);
 		if (separator != NULL && (counter < last_position))
-			print_separator(separator);
+			printf("%s", separator);
 	}
-	_putchar('\n');
+	printf("\n");
 
 	/* Clean up the va_list */
 	va_end(arguments);
-}
-
-
-/**
- * print_number - Prints a given number.
- * @number_to_print: The number to be printed.
- *
- * This function takes an integer as input and prints it
- * to the standard output.
- */
-void print_number(int number_to_print)
-{
-	unsigned int num;
-
-	if (number_to_print < 0)
-	{
-		_putchar('-');
-		num = number_to_print * -1;
-	}
-	else
-	{
-		num = number_to_print;
-	}
-
-	/* Recursively print each digit */
-	if (num / 10)
-	{
-		print_number(num / 10);
-	}
-	_putchar((num % 10) + '0');
-}
-
-/**
- * print_separator - Prints the separator string.
- * @separator: The string to be printed.
- */
-void print_separator(const char *separator)
-{
-	if (separator == NULL)
-		return;
-
-	while (*separator)
-	{
-		_putchar(*separator);
-		separator++;
-	}
 }
