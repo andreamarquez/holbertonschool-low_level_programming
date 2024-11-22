@@ -13,7 +13,7 @@
 void print_strings(const char *separator, const unsigned int number, ...)
 {
 	unsigned int counter;
-	int next_arg;
+	char *next_arg;
 	unsigned int last_position;
 	va_list arguments;
 
