@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdarg.h>
+#include <limits.h>
 #include "variadic_functions.h"
 
 /**
@@ -12,6 +13,7 @@
 int sum_them_all(const unsigned int number, ...)
 {
 	unsigned int counter;
+	int next_arg;
 	/*
 	* sum is a variable that hold the sum and
 	* initialize it to 0
@@ -33,7 +35,15 @@ int sum_them_all(const unsigned int number, ...)
 	/* the va_arg macro */
 	for (counter = 0; counter < number; counter++)
 	{
-		sum = sum + va_arg(arguments, int);
+		next_arg = va_arg(arguments, int);
+
+		/* Check for overflow */
+		if (sum + next_arg > INT_MAX)
+		{
+			va_end(arguments);
+			return (sum);
+		}
+		sum = sum + next_arg;
 	}
 
 	/* Clean up the va_list */
