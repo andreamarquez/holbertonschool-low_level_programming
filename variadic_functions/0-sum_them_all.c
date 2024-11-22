@@ -41,7 +41,7 @@ int sum_them_all(const unsigned int number, ...)
 		if (sum + next_arg > INT_MAX)
 		{
 			va_end(arguments);
-			return (sum);
+			return (INT_MAX);
 		}
 		sum = sum + next_arg;
 	}
