@@ -38,6 +38,7 @@ void print_numbers(const char *separator, const unsigned int number, ...)
 		if (separator != NULL && (counter < last_position))
 			print_separator(separator);
 	}
+	_putchar('\n');
 
 	/* Clean up the va_list */
 	va_end(arguments);
