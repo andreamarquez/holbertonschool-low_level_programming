@@ -27,17 +27,18 @@ void print_numbers(const char *separator, const unsigned int number, ...)
 	*/
 	va_start(arguments, number);
 
+	if (separator == 0)
+		separator = "";
 
 	/* iterate through arguments and sum them using */
 	/* the va_arg macro */
-	for (counter = 0; counter < number; counter++)
+	for (counter = 0; counter < last_position; counter++)
 	{
 		next_arg = va_arg(arguments, int);
-		printf("%d", next_arg);
-		if (separator != NULL && (counter < last_position))
-			printf("%s", separator);
+		printf("%d%s", next_arg, separator);
 	}
-	printf("\n");
+	next_arg = va_arg(arguments, int);
+	printf("%d\n", next_arg);
 
 	/* Clean up the va_list */
 	va_end(arguments);
