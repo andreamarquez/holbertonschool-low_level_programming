@@ -24,7 +24,7 @@ int _putchar(char c);
 typedef struct print_type
 {
 	char *format_type;
-	void (*print_function)(va_list);
+	void (*print_function)(va_list *args);
 } print_type_t;
 
 #endif /* VARIADIC_STRUCTS */

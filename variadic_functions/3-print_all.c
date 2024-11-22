@@ -2,10 +2,10 @@
 #include <stdio.h>
 #include "variadic_functions.h"
 
-void _printChar(va_list arguments);
-void _printInt(va_list arguments);
-void _printFloat(va_list arguments);
-void _printString(va_list arguments);
+void _printChar(va_list *arguments);
+void _printInt(va_list *arguments);
+void _printFloat(va_list *arguments);
+void _printString(va_list *arguments);
 
 /**
  * print_all - Prints anything with a new line at the end.
@@ -48,15 +48,16 @@ void print_all(const char * const format, ...)
 			print_by_type[format_option_counter].format_type[0])
 			{
 				printf("%s", separator);
-				print_by_type[format_option_counter].print_function(arguments);
+				print_by_type[format_option_counter].print_function(&arguments);
+				separator = ", ";
 				/* we end the inner loop iteration we found something to print */
-				/* break; */
+				break;
 			}
 			format_option_counter++;
 		}
 
 		/* we set the comma to print before the following args */
-		separator = ", ";
+		
 		next_argument_position++;
 	}
 	printf("\n");
@@ -71,9 +72,9 @@ void print_all(const char * const format, ...)
  * Description: This function retrieves a character from the provided
  *              variadic args and prints it using printf.
  */
-void _printChar(va_list arguments)
+void _printChar(va_list *arguments)
 {
-	printf("%c", va_arg(arguments, int));
+	printf("%c", va_arg(*arguments, int));
 }
 
 /**
@@ -83,9 +84,9 @@ void _printChar(va_list arguments)
  * This function retrieves an integer from the provided variadic argument
  * args and prints it using the printf function.
  */
-void _printInt(va_list arguments)
+void _printInt(va_list *arguments)
 {
-	printf("%i", va_arg(arguments, int));
+	printf("%i", va_arg(*arguments, int));
 }
 
 /**
@@ -96,9 +97,9 @@ void _printInt(va_list arguments)
  * args and prints it using the printf function with the
  * %f format specifier.
  */
-void _printFloat(va_list arguments)
+void _printFloat(va_list *arguments)
 {
-	printf("%f", va_arg(arguments, double));
+	printf("%f", va_arg(*arguments, double));
 }
 
 /**
@@ -109,11 +110,11 @@ void _printFloat(va_list arguments)
  * args and prints it. If the string is NULL,
  * it prints "(nil)" instead.
  */
-void _printString(va_list arguments)
+void _printString(va_list *arguments)
 {
 	char *non_null_string;
 
-	non_null_string = va_arg(arguments, char *);
+	non_null_string = va_arg(*arguments, char *);
 
 	if (non_null_string == NULL)
 		non_null_string = "(nil)";
