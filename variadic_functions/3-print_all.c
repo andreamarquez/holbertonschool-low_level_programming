@@ -57,7 +57,6 @@ void print_all(const char * const format, ...)
 		}
 
 		/* we set the comma to print before the following args */
-		
 		next_argument_position++;
 	}
 	printf("\n");
