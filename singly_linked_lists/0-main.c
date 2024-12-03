@@ -6,9 +6,12 @@
 /**
  * main - Entry point of the program
  *
- * This function demonstrates the creation and manipulation of a singly linked list.
- * It initializes a list with one element, adds a new element to the beginning of the list,
- * prints the list, frees the allocated memory, and prints the list again.
+ * This function demonstrates the creation and manipulation
+ * of a singly linked list.
+ * It initializes a list with one element, adds a new element
+ * to the beginning of the list,
+ * prints the list, frees the allocated memory, and prints
+ * the list again.
  *
  * Return: Always 0 (Success), or 1 if an error occurs
  */
