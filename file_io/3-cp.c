@@ -63,7 +63,6 @@ int main(int argc, char *argv[])
 
 	if (close(fd_from) == -1)
 		print_error_and_exit("Error: Can't close fd %d\n", 100, argv[1]);
-
 	if (close(fd_to) == -1)
 		print_error_and_exit("Error: Can't close fd %d\n", 100, argv[2]);
 	return (0);
