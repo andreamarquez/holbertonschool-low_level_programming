@@ -5,7 +5,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <errno.h>
-#include <string.h>
 
 void handle_error(int exit_code, const char *message, const char *filename);
 void copy_file_content(const char *source_file, const char *dest_file);
@@ -50,11 +49,6 @@ void copy_file_content(const char *source_file, const char *dest_file)
 {
 	int source_fd, dest_fd, bytes_read, bytes_written;
 	char buffer[1024];
-
-	if (strcmp(source_file, dest_file) == 0)
-	{
-		return;
-	}
 
 	source_fd = open(source_file, O_RDONLY);
 	if (source_fd == -1)
