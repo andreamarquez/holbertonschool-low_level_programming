@@ -8,6 +8,7 @@
 
 void handle_error(int exit_code, const char *message, const char *filename);
 void copy_file_content(const char *source_file, const char *dest_file);
+int my_strcomp(const char *str1, const char *str2);
 
 /**
  * main - Entry point of application that copies the content of a file
@@ -49,6 +50,11 @@ void copy_file_content(const char *source_file, const char *dest_file)
 {
 	int source_fd, dest_fd, bytes_read, bytes_written;
 	char buffer[1024];
+
+	if (my_strcomp(source_file, dest_file) == 0)
+	{
+		return;
+	}
 
 	source_fd = open(source_file, O_RDONLY);
 	if (source_fd == -1)
@@ -102,4 +108,23 @@ void handle_error(int exit_code, const char *message, const char *filename)
 {
 	dprintf(STDERR_FILENO, "%s %s\n", message, filename);
 	exit(exit_code);
+}
+
+/**
+ * my_strcomp - Compares two strings
+ * @str1: The first string
+ * @str2: The second string
+ *
+ * Return: 0 if the strings are equal, a negative value
+ * if str1 is less than str2,
+ * and a positive value if str1 is greater than str2.
+ */
+int my_strcomp(const char *str1, const char *str2)
+{
+	while (*str1 && (*str1 == *str2))
+	{
+		str1++;
+		str2++;
+	}
+	return (*(unsigned char *)str1 - *(unsigned char *)str2);
 }
