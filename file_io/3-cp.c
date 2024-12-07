@@ -43,7 +43,6 @@ int main(int argc, char *argv[])
 		close(fd_from);
 		print_error_and_exit("Error: Can't write to %s\n", 99, argv[2]);
 	}
-
 	while ((read_bytes = read(fd_from, buffer, BUFFER_SIZE)) > 0)
 	{
 		written_bytes = write(fd_to, buffer, read_bytes);
