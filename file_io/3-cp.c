@@ -62,10 +62,17 @@ void copy_file_content(const char *source_file, const char *dest_file)
 		handle_error(98, "Error: Can't read from file", source_file);
 	}
 
-	dest_fd = open(dest_file, O_WRONLY | O_CREAT | O_TRUNC, 0664);
+	dest_fd = open(dest_file, O_WRONLY | O_CREAT, 0664);
 	if (dest_fd == -1)
 	{
 		close(source_fd);
+		handle_error(99, "Error: Can't write to", dest_file);
+	}
+
+	if (ftruncate(dest_fd, 0) == -1)
+	{
+		close(source_fd);
+		close(dest_fd);
 		handle_error(99, "Error: Can't write to", dest_file);
 	}
 
