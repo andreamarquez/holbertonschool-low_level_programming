@@ -49,7 +49,6 @@ int main(int argc, char *argv[])
 		close(fd_to);
 		print_error_and_exit("Error: Can't read from file %s\n", 98, argv[1]);
 	}
-
 	if (close(fd_from) == -1)
 		print_error_and_exit("Error: Can't close fd %d\n", 100, NULL);
 	if (close(fd_to) == -1)
@@ -66,6 +65,9 @@ int main(int argc, char *argv[])
 void print_error_and_exit(
 	const char *message, int exit_code, const char *filename)
 {
-	dprintf(STDERR_FILENO, message, filename);
+	if (filename)
+		dprintf(STDERR_FILENO, message, filename);
+	else
+		dprintf(STDERR_FILENO, message, exit_code);
 	exit(exit_code);
 }
