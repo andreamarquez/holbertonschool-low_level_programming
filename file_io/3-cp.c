@@ -1,57 +1,111 @@
+#include <stdlib.h>
+#include <stdio.h>
+
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <fcntl.h>
+
 #include <unistd.h>
-#include <stdlib.h>
-#include <stdio.h>
-#include <errno.h>
+
+void copy_textfile(char *file_from, char *file_to);
+void exit_program(int number, char *workfile);
 
 /**
- * main - Copies the content of one file to another.
- * @argc: The number of arguments.
- * @argv: The argument vector.
+ * main - Entry point of application that copies the content of a file
+ * @ac: Count of arguments
+ * @av: List of arguments
  *
- * Return: 0 on success, or exits with an error code on failure.
+ * Return: Always 0 (Success)
+ * If the count of arguments is incorrect, exits the program with code 97
+ * If cannot read the origin file, exits with code 98
+ * If cannot create or write into the destiny file, exits with code 99
+ * If cannot close a file descriptor, exits with code 100
  */
-int main(int argc, char **argv)
+int main(int ac, char **av)
 {
-	int fd_source, fd_dest, bytes_read, bytes_written, close_source, close_dest;
-	char buffer[1024];
-
-	if (argc != 3)
-		dprintf(STDERR_FILENO, "Usage: cp file_from file_to\n"), exit(97);
-
-	fd_source = open(argv[1], O_RDONLY);
-	if (fd_source == -1)
+	if (ac != 3)
 	{
-		dprintf(STDERR_FILENO, "Error: Can't read from file %s\n", argv[1]);
-		exit(98);
+		dprintf(STDERR_FILENO, "Usage: cp file_from file_to\n");
+		exit(97);
 	}
 
-	fd_dest = open(argv[2], O_CREAT | O_WRONLY | O_TRUNC, 0664);
-	if (fd_dest == -1)
-		dprintf(STDERR_FILENO, "Error: Can't write to %s\n", argv[2]), exit(99);
-
-	while ((bytes_read = read(fd_source, buffer, 1024)) > 0)
-	{
-		bytes_written = write(fd_dest, buffer, bytes_read);
-		if (bytes_written != bytes_read)
-		{
-			dprintf(STDERR_FILENO, "Error: Can't write to %s\n", argv[2]);
-			exit(99);
-		}
-	}
-	if (bytes_read == -1)
-	{
-		dprintf(STDERR_FILENO, "Error: Can't read from file %s\n", argv[1]);
-		exit(98);
-	}
-	close_source = close(fd_source);
-	if (close_source == -1)
-		dprintf(STDERR_FILENO, "Error: Can't close fd %d\n", fd_source), exit(100);
-	close_dest = close(fd_dest);
-	if (close_dest == -1)
-		dprintf(STDERR_FILENO, "Error: Can't close fd %d\n", fd_dest), exit(100);
+	copy_textfile(av[1], av[2]);
 
 	return (0);
+}
+
+/**
+ * copy_textfile - Copies from text file to another
+ * @file_from: File from copy the information
+ * @file_to: File where to copy the information
+ *
+ * Description: Copies the information from one file to another
+ * If the file where to copy already exist, it truncates it and does not
+ *  change it permissions. If not, create with permissions rw-rw-r--
+ * If cannot read the file_from file, exits with code 98
+ * If cannot create or write into file_to file, exits with code 99
+ * If cannot close a file descriptor, exits with code 100
+ *
+ * Return: Nothing
+ */
+void copy_textfile(char *file_from, char *file_to)
+{
+	int fst, fe, el1, el2, c = 1;
+	char buffer[1024];
+
+	fst = open(file_from, O_RDONLY);
+	if (fst == -1)
+		exit_program(98, file_from);
+
+	fe = open(file_to, O_CREAT | O_WRONLY | O_TRUNC, 0664);
+	if (fe == -1)
+		close(fst), exit_program(99, file_to);
+
+	while (c)
+	{
+		el1 = read(fst, buffer, 1024);
+		if (el1 == -1)
+		{
+			close(fst), close(fe);
+			exit_program(98, file_from);
+		}
+		el2 = write(fe, buffer, el1);
+		if (el2 == -1)
+		{
+			close(fst), close(fe);
+			exit_program(99, file_to);
+		}
+		if (el2 < 1024)
+			c = 0;
+	}
+	el1 = close(fst), el2 = close(fe);
+	if (el1 == -1 || el2 == -1)
+	{
+		dprintf(STDERR_FILENO, "Error: Can't close fd %d\n", (el1 == -1 ? fst : fe));
+		exit(100);
+	}
+}
+
+/**
+ * exit_program - Exits the program and send a message according to the error
+ * @number: Number of error
+ * @workfile: Name fo the file that produces the error
+ *
+ * Return: Nothing
+ */
+void exit_program(int number, char *workfile)
+{
+	switch (number)
+	{
+	case 98:
+		dprintf(STDERR_FILENO, "Error: Can't read from file %s\n", workfile);
+		break;
+	case 99:
+		dprintf(STDERR_FILENO, "Error: Can't write to %s\n", workfile);
+		break;
+	case 100:
+		dprintf(STDERR_FILENO, "Error: Can't close fd %s\n", workfile);
+		break;
+	}
+	exit(number);
 }
