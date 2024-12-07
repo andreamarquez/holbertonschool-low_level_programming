@@ -21,7 +21,7 @@ void copy_file_content(const char *source_file, const char *dest_file);
  * If cannot close a file descriptor, exits with code 100
  */
 int main(int argc, char **argv)
-	{
+{
 	if (argc != 3)
 	{
 		dprintf(STDERR_FILENO, "Usage: cp file_from file_to\n");
