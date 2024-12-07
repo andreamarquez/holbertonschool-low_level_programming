@@ -2,21 +2,9 @@
 #include <stdlib.h>
 #include <fcntl.h>
 #include <unistd.h>
-#include <errno.h>
+#include "main.h"
 
 #define BUFFER_SIZE 1024
-
-/**
- * print_error_and_exit - Prints an error message to stderr and exits.
- * @message: The error message to print.
- * @exit_code: The exit code to use.
- * @file: The file name to include in the error message.
- */
-void print_error_and_exit(const char *message, int exit_code, const char *file)
-{
-	dprintf(STDERR_FILENO, message, file);
-	exit(exit_code);
-}
 
 /**
  * main - Copies the content of one file to another.
@@ -31,7 +19,7 @@ int main(int argc, char *argv[])
 	char buffer[BUFFER_SIZE];
 
 	if (argc != 3)
-		print_error_and_exit("Usage: cp %s %s\n", 97, "");
+		print_error_and_exit("Usage: cp file_from file_to\n", 97, NULL);
 
 	fd_from = open(argv[1], O_RDONLY);
 	if (fd_from == -1)
@@ -43,6 +31,7 @@ int main(int argc, char *argv[])
 		close(fd_from);
 		print_error_and_exit("Error: Can't write to %s\n", 99, argv[2]);
 	}
+
 	while ((read_bytes = read(fd_from, buffer, BUFFER_SIZE)) > 0)
 	{
 		written_bytes = write(fd_to, buffer, read_bytes);
@@ -53,6 +42,7 @@ int main(int argc, char *argv[])
 			print_error_and_exit("Error: Can't write to %s\n", 99, argv[2]);
 		}
 	}
+
 	if (read_bytes == -1)
 	{
 		close(fd_from);
@@ -61,8 +51,21 @@ int main(int argc, char *argv[])
 	}
 
 	if (close(fd_from) == -1)
-		print_error_and_exit("Error: Can't close fd %d\n", 100, argv[1]);
+		print_error_and_exit("Error: Can't close fd %d\n", 100, NULL);
 	if (close(fd_to) == -1)
-		print_error_and_exit("Error: Can't close fd %d\n", 100, argv[2]);
+		print_error_and_exit("Error: Can't close fd %d\n", 100, NULL);
 	return (0);
+}
+
+/**
+ * print_error_and_exit - Prints an error message to stderr and exits.
+ * @message: The error message to print.
+ * @exit_code: The exit code to use.
+ * @filename: The file name to include in the error message.
+ */
+void print_error_and_exit(
+	const char *message, int exit_code, const char *filename)
+{
+	dprintf(STDERR_FILENO, message, filename);
+	exit(exit_code);
 }
