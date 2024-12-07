@@ -1,111 +1,105 @@
-#include <stdlib.h>
-#include <stdio.h>
-
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <fcntl.h>
-
 #include <unistd.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <errno.h>
 
-void copy_textfile(char *file_from, char *file_to);
-void exit_program(int number, char *workfile);
+void handle_error(int exit_code, const char *message, const char *filename);
+void copy_file_content(const char *source_file, const char *dest_file);
 
 /**
  * main - Entry point of application that copies the content of a file
- * @ac: Count of arguments
- * @av: List of arguments
+ * @argc: Count of arguments
+ * @argv: List of arguments
  *
  * Return: Always 0 (Success)
  * If the count of arguments is incorrect, exits the program with code 97
  * If cannot read the origin file, exits with code 98
- * If cannot create or write into the destiny file, exits with code 99
+ * If cannot create or write into the destination file, exits with code 99
  * If cannot close a file descriptor, exits with code 100
  */
-int main(int ac, char **av)
-{
-	if (ac != 3)
+int main(int argc, char **argv)
+	{
+	if (argc != 3)
 	{
 		dprintf(STDERR_FILENO, "Usage: cp file_from file_to\n");
 		exit(97);
 	}
 
-	copy_textfile(av[1], av[2]);
+	copy_file_content(argv[1], argv[2]);
 
 	return (0);
 }
 
 /**
- * copy_textfile - Copies from text file to another
- * @file_from: File from copy the information
- * @file_to: File where to copy the information
+ * copy_file_content - Copies content from one file to another
+ * @source_file: File to copy the information from
+ * @dest_file: File to copy the information to
  *
  * Description: Copies the information from one file to another
- * If the file where to copy already exist, it truncates it and does not
- *  change it permissions. If not, create with permissions rw-rw-r--
- * If cannot read the file_from file, exits with code 98
- * If cannot create or write into file_to file, exits with code 99
- * If cannot close a file descriptor, exits with code 100
- *
- * Return: Nothing
+ * If the destination file already exists, it truncates it and does not
+ * change its permissions. If not, it creates it with permissions rw-rw-r--.
+ * If it cannot read the source file, exits with code 98.
+ * If it cannot create or write into the destination file, exits with code 99.
+ * If it cannot close a file descriptor, exits with code 100.
  */
-void copy_textfile(char *file_from, char *file_to)
+void copy_file_content(const char *source_file, const char *dest_file)
 {
-	int fst, fe, el1, el2, c = 1;
+	int source_fd, dest_fd, bytes_read, bytes_written;
 	char buffer[1024];
 
-	fst = open(file_from, O_RDONLY);
-	if (fst == -1)
-		exit_program(98, file_from);
-
-	fe = open(file_to, O_CREAT | O_WRONLY | O_TRUNC, 0664);
-	if (fe == -1)
-		close(fst), exit_program(99, file_to);
-
-	while (c)
+	source_fd = open(source_file, O_RDONLY);
+	if (source_fd == -1)
 	{
-		el1 = read(fst, buffer, 1024);
-		if (el1 == -1)
-		{
-			close(fst), close(fe);
-			exit_program(98, file_from);
-		}
-		el2 = write(fe, buffer, el1);
-		if (el2 == -1)
-		{
-			close(fst), close(fe);
-			exit_program(99, file_to);
-		}
-		if (el2 < 1024)
-			c = 0;
+		handle_error(98, "Error: Can't read from file", source_file);
 	}
-	el1 = close(fst), el2 = close(fe);
-	if (el1 == -1 || el2 == -1)
+
+	dest_fd = open(dest_file, O_CREAT | O_WRONLY | O_TRUNC, 0664);
+	if (dest_fd == -1)
 	{
-		dprintf(STDERR_FILENO, "Error: Can't close fd %d\n", (el1 == -1 ? fst : fe));
-		exit(100);
+		close(source_fd);
+		handle_error(99, "Error: Can't write to", dest_file);
+	}
+
+	while ((bytes_read = read(source_fd, buffer, sizeof(buffer))) > 0)
+	{
+		bytes_written = write(dest_fd, buffer, bytes_read);
+		if (bytes_written != bytes_read)
+		{
+			close(source_fd);
+			close(dest_fd);
+			handle_error(99, "Error: Can't write to", dest_file);
+		}
+	}
+	if (bytes_read == -1)
+	{
+		close(source_fd);
+		close(dest_fd);
+		handle_error(98, "Error: Can't read from file", source_file);
+	}
+
+	if (close(source_fd) == -1)
+	{
+		close(dest_fd);
+		handle_error(100, "Error: Can't close fd", source_file);
+	}
+
+	if (close(dest_fd) == -1)
+	{
+		handle_error(100, "Error: Can't close fd", dest_file);
 	}
 }
 
 /**
- * exit_program - Exits the program and send a message according to the error
- * @number: Number of error
- * @workfile: Name fo the file that produces the error
- *
- * Return: Nothing
+ * handle_error - Handles errors by printing a message and exiting
+ * @exit_code: The exit code to use
+ * @message: The error message to print
+ * @filename: The filename associated with the error
  */
-void exit_program(int number, char *workfile)
+void handle_error(int exit_code, const char *message, const char *filename)
 {
-	switch (number)
-	{
-	case 98:
-		dprintf(STDERR_FILENO, "Error: Can't read from file %s\n", workfile);
-		break;
-	case 99:
-		dprintf(STDERR_FILENO, "Error: Can't write to %s\n", workfile);
-		break;
-	case 100:
-		dprintf(STDERR_FILENO, "Error: Can't close fd %s\n", workfile);
-		break;
-	}
-	exit(number);
+	dprintf(STDERR_FILENO, "%s %s\n", message, filename);
+	exit(exit_code);
 }
